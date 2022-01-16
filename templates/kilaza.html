@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Kilaža</title>
+</head>
+<img src="../static/baby.png" alt="slika" class="logo">
+<header class="container">
+    <ul>
+      <li><form action="/prikazi_biljeske" method="post">
+        <input type="submit" value="Bilješke" class="btn">
+      </form></li>
+      <li><form action="/jela_prikaz" method="post">
+        <input type="submit" value="Jelovnik" class="btn">
+      </form></li>
+      <li><form action="/udarci_prikaz" method="post">
+        <input type="submit" value="Udarci bebe" class="btn">
+      </form></li>
+      <li><form action="/ciklus_prikaz" method="post">
+        <input type="submit" value="Zadnji menstrulani ciklus" class="btn">
+      </form></li>
+      <li><form action="/statistika_prikaz" method="post">
+        <input type="submit" value="Opći podaci" class="btn">
+      </form></li>
+    </ul>
+  </header>
+<body>
+    <div class="container">
+      {% if message %}
+            <p class="message">{{message | safe}}</p>
+        {% endif %}
+    <table>
+        <tr>
+            <th>Datum</th>
+            <th>Kilaža</th>
+        </tr>
+        {% for item in data %}
+        <tr id="{{item[0]}}">
+            <td class="row-data" >{{item[0]}}</td>
+            <td class="row-data" >{{item[1]}}</td>
+            <td><input type="button" 
+              value="Uredi" class="btn"
+              onclick="show()" /></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Nova kilaža</h2>
+    <form action="/unesi_kilazu" method="post">
+        <input type="datetime" id="datumivrijeme" name="datumivrijeme" style="display:none;">
+        <input type="number" name="kile" id="kile">
+        <input type="submit" value="Unesi kilažu" class="btn">
+        <input type="submit" formaction="/update_kilaze" value="Promijeni kilažu" class="btn">
+        <input type="submit" formaction="/delete_kilaze" value="Obriši kilažu" class="btn">
+    </form>
+</div>
+<script>
+  function show() {
+      var rowId = 
+          event.target.parentNode.parentNode.id
+      var data = document.getElementById(rowId).querySelectorAll(".row-data"); 
+      var date = data[0].innerHTML;
+      var number = data[1].innerHTML;
+      document.getElementById("datumivrijeme").value = date;
+      document.getElementById("kile").value = number;
+  }
+</script>
+</body>
+</html>
