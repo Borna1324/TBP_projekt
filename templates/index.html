@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Zadnji menstrualni ciklus</title>
+</head>
+<img src="../static/baby.png" alt="slika" class="logo">
+<header class="container">
+    <ul>
+      <li><form action="/prikazi_biljeske" method="post">
+        <input type="submit" value="Bilješke" class="btn">
+      </form></li>
+      <li><form action="/kilaza_prikaz" method="post">
+        <input type="submit" value="Kilaža" class="btn">
+      </form></li>
+      <li><form action="/jela_prikaz" method="post">
+        <input type="submit" value="Jelovnik" class="btn">
+      </form></li>
+      <li><form action="/udarci_prikaz" method="post">
+        <input type="submit" value="Udarci bebe" class="btn">
+      </form></li>
+      <li><form action="/statistika_prikaz" method="post">
+        <input type="submit" value="Opći podaci" class="btn">
+      </form></li>
+    </ul>
+  </header>
+<body>
+    <div class="container">
+        {% if message %}
+            <p class="message">{{message | safe}}</p>
+        {% endif %}
+        <table>
+            <tr>
+                <th>Datum</th>
+            </tr>
+            {% for item in data %}
+            <tr id="1" >
+                <td class="row-data" style="display:none;">{{item[0]}}</td>
+                <td class="row-data">{{item[1]}}</td>
+                <td><input type="button" 
+                  value="Uredi" class="btn"
+                  onclick="show()" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form action="/datum_zadnjeg_ciklusa" method="post">
+            <div class="form-group">
+                <h3>Zadnji menstrulani ciklus</h3>
+                <input type="number" id="id" name="id" style="display:none;">
+                <input type="date" id="datum" name="datum" />
+            </div>
+            <input type="submit" value="Unesi novi datum" class="btn">
+            <input type="submit" formaction="/update_datuma" class="btn" value="Promijeni datum">
+            <input type="submit" formaction="/delete_datuma" class="btn" value="Obriši datum">
+      
+        </form>
+    </div>
+    <script>
+      function show() {
+          var rowId = 
+              event.target.parentNode.parentNode.id
+          var data = document.getElementById(rowId).querySelectorAll(".row-data"); 
+          var id_num = data[0].innerHTML;
+          var date = data[1].innerHTML;
+          document.getElementById("id").value = id_num;
+          document.getElementById("datum").value = date;
+      }
+  </script>   
+</body>
+</html>
