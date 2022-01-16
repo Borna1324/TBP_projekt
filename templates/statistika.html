@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Statistika</title>
+</head>
+<img src="../static/baby.png" alt="slika" class="logo">
+<header class="container">
+    <ul>
+      <li><form action="/prikazi_biljeske" method="post">
+        <input type="submit" value="Bilješke" class="btn">
+      </form></li>
+      <li><form action="/kilaza_prikaz" method="post">
+        <input type="submit" value="Kilaža" class="btn">
+      </form></li>
+      <li><form action="/udarci_prikaz" method="post">
+        <input type="submit" value="Udarci bebe" class="btn">
+      </form></li>
+      <li><form action="/ciklus_prikaz" method="post">
+        <input type="submit" value="Zadnji menstrulani ciklus" class="btn">
+      </form></li>
+      <li><form action="/jela_prikaz" method="post">
+        <input type="submit" value="Jelovnik" class="btn">
+      </form></li>
+    </ul>
+  </header>
+<body class="container">
+    <h1>Opći podaci o trudnoći</h1>
+    {% if datum_rodenja %}
+    <h3 style="text-align: center;">Okvirni datum rođenja</h3>
+    <h5  style="text-align: center;">{{datum_rodenja | safe}}</h5>
+            
+    {% endif %}
+    <br><h2>Pretraži bilješke u intervalu</h2><br>
+    <form action="/biljeske_sort" method="post">
+      <input type="date" name="date" id="date">
+      <input type="date" name="date1" id="date1">
+      <input type="submit" value="Pretraži bilješke" class="btn">
+    </form>
+    <table>
+      <tr>
+        <th>Datum</th>
+        <th>Bilješka</th>
+      </tr>
+    {% for item in data %}
+        <tr>
+            <td >{{item[0]}}</td>
+            <td >{{item[1]}}</td>
+        </tr>
+    {% endfor %}
+  </table>
+  <br><h2>Pretraži kilažu u intervalu</h2><br>
+  <form action="/kilaza_sort" method="post">
+    <input type="date" name="date2" id="date2">
+    <input type="date" name="date3" id="date3">
+    <input type="submit" value="Pretraži kilažu" class="btn">
+  </form>
+  <table>
+    <tr>
+      <th>Datum</th>
+      <th>Kilaža</th>
+    </tr>
+  {% for item in data1 %}
+      <tr>
+          <td >{{item[0]}}</td>
+          <td >{{item[1]}}</td>
+      </tr>
+  {% endfor %}
+</table>
+<br><h2>Pretraži udarce bebe u intervalu</h2><br>
+  <form action="/udarci_sort" method="post">
+    <input type="date" name="date4" id="date4">
+    <input type="date" name="date5" id="date5">
+    <input type="submit" value="Pretraži udarce" class="btn">
+  </form>
+  <table>
+    <tr>
+      <th>Datum</th>
+      <th>Udarci</th>
+    </tr>
+  {% for item in data2 %}
+      <tr>
+          <td >{{item[0]}}</td>
+          <td >{{item[1]}}</td>
+      </tr>
+  {% endfor %}
+</table>
+{% if broj %}
+    <h3 style="text-align: center;">U koliko navrata je beba udarala dosada:</h3>
+    <h4  style="text-align: center;">{{broj | safe}}</h4>
+            
+    {% endif %}
+</body>
+</html>
